@@ -1,1 +1,1 @@
-from .user import User
+from .order_queue import OrderQueue

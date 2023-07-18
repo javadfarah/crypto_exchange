@@ -8,5 +8,5 @@ class BalanceRepository:
         return Balance.objects.filter(user_id=user_id, balance__gte=balance).exists()
 
     @staticmethod
-    def decrease_user_balance(user_id: str, deduction_amount: int) -> None:
+    def decrease_user_balance(user_id: int, deduction_amount: int | float) -> None:
         Balance.objects.filter(user_id=user_id).update(balance=F('balance') - deduction_amount)
