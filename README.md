@@ -1,6 +1,7 @@
 #crypto_exchange
-this repository represent the sample of ordering crypto
-how to run
+this repository represent the sample of ordering crypto.
+
+how to run:
 
 ```
 sudo docker-compose build
@@ -35,4 +36,9 @@ NOTICE:
 
 2.the api takes user_id as input it should be changed to take user_id from authenticated user
 
+```
+tests:
+```
+in the src root run folliwng command:
+pytest -s  --reuse-db
 ```
