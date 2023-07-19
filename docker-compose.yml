@@ -5,8 +5,6 @@ services:
     build:
       dockerfile: Dockerfile
       context: .
-    env_file:
-      - .env
     tty: true
     volumes:
       - static_volume:/app/src/core/static
