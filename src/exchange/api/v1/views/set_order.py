@@ -10,7 +10,6 @@ class SetOrderView(generics.CreateAPIView):
     # TODO: change the user_id section and get it from authenticated user
     # this permission is mandatory but is commented for testing and development
     # permission_classes = [IsAuthenticated]
-    crypto_price = 4
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
