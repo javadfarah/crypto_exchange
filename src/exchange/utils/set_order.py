@@ -23,7 +23,7 @@ class OrderInterface(ABC):
         pass
 
 
-class OrderManager(CommandInterface):
+class OrderManager(OrderInterface):
     """
     TODO: currency needs to read from database and currency price as well
 
