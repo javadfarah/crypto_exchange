@@ -1,6 +1,25 @@
 version: '3.2'
 
 services:
+  postgres:
+    image: postgres
+    restart: always
+    container_name: postgresql
+    hostname: postgresql
+    environment:
+      POSTGRES_DB: crypto_db
+      POSTGRES_USER: javadfarah
+      POSTGRES_PASSWORD: javadfarah
+      POSTGRES_ROOT_PASSWORD: root
+      PGDATA: /var/lib/postgresql/mydb
+    ports:
+      - '5432:5432'
+    expose:
+      - '5432'
+    networks:
+      - nginx_network
+    volumes:
+      - ./postgres:/var/lib/postgresql/mydb
   web:
     build:
       dockerfile: Dockerfile
@@ -15,6 +34,8 @@ services:
       - media_volume:/app/src/core/media
     networks:
       - nginx_network
+    depends_on:
+      - postgres
 
   nginx:
     image: nginx:latest
@@ -36,3 +57,6 @@ networks:
 volumes:
   static_volume:
   media_volume:
+  postgres:
+    external: true
+  metabase:

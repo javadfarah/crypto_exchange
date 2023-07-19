@@ -16,6 +16,6 @@ python /app/src/manage.py collectstatic --noinput
 python /app/src/manage.py makemigrations user --noinput
 python /app/src/manage.py makemigrations --noinput
 python /app/src/manage.py migrate --noinput
-python /app/src/manage.py createsuperuser --noinput
+python /app/src/manage.py createsuperuser --noinput|| echo "superuser exists"
 exec gunicorn --conf /app/gunicorn_conf.py  --bind  0.0.0.0:80 core.wsgi
 
