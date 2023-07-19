@@ -9,7 +9,7 @@ from abc import ABC, abstractmethod
 from user.repositories.postgres.order import OrderRepository
 
 
-class CommandInterface(ABC):
+class OrderInterface(ABC):
     @abstractmethod
     def start_process(self) -> Response:
         """
