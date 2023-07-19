@@ -1,9 +1,7 @@
 from django.contrib.auth import get_user_model
-from django.core.exceptions import ValidationError
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
-from exchange.api.v1.serializers import SetOrderSerializer
 from exchange.utils.set_order import OrderManager
 import pytest
 
@@ -14,10 +12,14 @@ User = get_user_model()
 
 @pytest.fixture
 def authenticated_client():
-    user = User.objects.create_user(username='testuser', password='testpassword')
     client = APIClient()
-    client.force_authenticate(user=user)
     return client
+
+
+@pytest.fixture
+def test_user():
+    user = User.objects.create_user(username='testuser', password='testpassword')
+    return user
 
 
 @pytest.mark.django_db
@@ -27,11 +29,12 @@ def test_my_db():
 
 
 @pytest.mark.django_db(transaction=True)
-def test_set_order_view_not_enough_balance(authenticated_client):
+def test_set_order_view_not_enough_balance(test_user, authenticated_client):
     url = reverse('set-order')
     data = {
         'crypto_name': 'Bitcoin',
-        'crypto_amount': 5
+        'crypto_amount': 5,
+        'user_id': test_user.id
     }
 
     with pytest.raises(Exception) as e_info:
@@ -39,13 +42,13 @@ def test_set_order_view_not_enough_balance(authenticated_client):
 
 
 @pytest.mark.django_db(transaction=True)
-def test_set_order_view_success(authenticated_client):
-    user = authenticated_client.handler._force_user
-    Balance.objects.create(user=user, balance=20)
+def test_set_order_view_success(test_user, authenticated_client):
+    Balance.objects.create(user=test_user, balance=20)
     url = reverse('set-order')
     data = {
         'crypto_name': 'Bitcoin',
-        'crypto_amount': 5
+        'crypto_amount': 5,
+        'user_id': test_user.id
     }
 
     response = authenticated_client.post(url, data)
@@ -53,11 +56,13 @@ def test_set_order_view_success(authenticated_client):
     assert response.data == {"message": "Order saved and processed"}
 
 
-def test_set_order_view_invalid_data(authenticated_client):
+def test_set_order_view_invalid_data(test_user, authenticated_client):
     url = reverse('set-order')
     data = {
         'crypto_name': 'Bitcoin',
-        'crypto_amount': -5
+        'crypto_amount': -5,
+        'user_id': test_user.id
+
     }
 
     response = authenticated_client.post(url, data)

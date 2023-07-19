@@ -22,7 +22,4 @@ class SetOrderView(generics.CreateAPIView):
         crypto_amount = serializer.validated_data['crypto_amount']
         user_id = request.user.id
         order_manager = OrderManager(crypto_name=crypto_name, crypto_amount=crypto_amount, user_id=user_id)
-        return order_manager.process_orders()
-
-    def buy_from_exchange(self):
-        return True
+        return order_manager.start_process()
