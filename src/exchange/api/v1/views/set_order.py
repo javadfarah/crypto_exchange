@@ -1,8 +1,6 @@
-from user.models import User, Order
+from user.models import Order
 from exchange.api.v1.serializers import SetOrderSerializer
 from rest_framework import generics
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
 from exchange.utils.set_order import OrderManager
 
 

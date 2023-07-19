@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from exchange.repositories.postgres import OrderQueueRepository
 from user.repositories.postgres.balance import BalanceRepository
 from rest_framework import status
-from django.core.exceptions import ValidationError
+from rest_framework.serializers import ValidationError
 from abc import ABC, abstractmethod
 from user.repositories.postgres.order import OrderRepository
 

@@ -1,6 +1,4 @@
 from exchange.models import OrderQueue
-from user.models import Balance
-from django.db.models import F
 
 
 class OrderQueueRepository:
