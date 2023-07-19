@@ -98,13 +98,13 @@ class OrderManager(CommandInterface):
             self.decrease_user_balance()
             order = self.create_order()
             try:
-                if self.set_orders(order_id=order.id):
+                if self.set_orders(order_id=order.id) is True:
                     return Response({"message": "Order saved and processed"})
                 else:
                     return Response({"message": "Order saved"})
             except Exception as ee:
                 print(ee)
-                transaction.rollback()
+                transaction.set_rollback(True)
                 return Response({"message": "an error occurred"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def set_orders(self, order_id: int) -> bool:

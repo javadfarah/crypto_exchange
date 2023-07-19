@@ -17,9 +17,9 @@ class SetOrderView(generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-
         crypto_name = serializer.validated_data['crypto_name']
         crypto_amount = serializer.validated_data['crypto_amount']
-        user_id = request.user.id
+        # user_id = request.user.id
+        user_id = serializer.validated_data['user_id'].id
         order_manager = OrderManager(crypto_name=crypto_name, crypto_amount=crypto_amount, user_id=user_id)
         return order_manager.start_process()
