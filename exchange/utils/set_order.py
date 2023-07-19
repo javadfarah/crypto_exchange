@@ -33,19 +33,24 @@ class OrderManager:
             order = OrderRepository.create_order(crypto_name=self.crypto_name, user_id=self.user_id,
                                                  amount=self.crypto_amount)
             try:
-                self.set_orders(order_id=order.id)
+                if self.set_orders(order_id=order.id):
+                    return Response({"message": "Order saved and processed"})
+                else:
+                    return Response({"message": "Order saved"})
             except Exception as ee:
                 print(ee)
                 transaction.rollback()
                 return Response({"message": "an error occurred"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        return Response({"message": "Order saved and processed"})
 
-    def set_orders(self, order_id: int) -> None:
+    def set_orders(self, order_id: int) -> bool:
         crypto_order_queue = OrderQueueRepository.add_order_to_queue(crypto_name=self.crypto_name,
                                                                      amount=self.crypto_amount, order_id=order_id)
         if crypto_order_queue.total_amount * self.crypto_price >= 10:
             if self.buy_from_exchange():
                 OrderRepository.update_order_process_status(crypto_order_queue.orders, status=True)
+                return True
+        else:
+            return False
 
     def buy_from_exchange(self) -> bool:
         return True
