@@ -39,6 +39,6 @@ NOTICE:
 ```
 tests:
 ```
-in the src root run followng command:
+in the src root run following command:
 pytest -s  --reuse-db
 ```
