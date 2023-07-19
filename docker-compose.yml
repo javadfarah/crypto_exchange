@@ -6,6 +6,10 @@ services:
       dockerfile: Dockerfile
       context: .
     tty: true
+    environment:
+      - DJANGO_SUPERUSER_PASSWORD=123
+      - DJANGO_SUPERUSER_USERNAME=admin
+      - DJANGO_SUPERUSER_EMAIL=m.farahnak1996@gmail.com
     volumes:
       - static_volume:/app/src/core/static
       - media_volume:/app/src/core/media
@@ -15,7 +19,7 @@ services:
   nginx:
     image: nginx:latest
     ports:
-      - 9000:80
+      - 8000:80
     volumes:
       - ./nginx/conf/:/etc/nginx/conf.d/
       - static_volume:/app/src/core/static  # <-- bind the static volume
