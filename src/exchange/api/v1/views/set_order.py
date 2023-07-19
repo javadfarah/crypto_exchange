@@ -7,7 +7,7 @@ from exchange.utils.set_order import OrderManager
 class SetOrderView(generics.CreateAPIView):
     queryset = Order.objects.all()
     serializer_class = SetOrderSerializer
-
+    # TODO: change the user_id section and get it from authenticated user
     # this permission is mandatory but is commented for testing and development
     # permission_classes = [IsAuthenticated]
     crypto_price = 4
