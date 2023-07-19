@@ -25,6 +25,8 @@ class CommandInterface(ABC):
 
 class OrderManager(CommandInterface):
     """
+    TODO: currency needs to read from database and currency price as well
+
     Class responsible for managing order processing.
 
     Parameters
