@@ -27,7 +27,6 @@ class OrderQueueRepository:
         """
         with transaction.atomic():
             try:
-                print(crypto_name)
                 order_queue, _ = OrderQueue.objects.prefetch_related('orders').select_for_update().get_or_create(
                     crypto_name=crypto_name, is_deleted=False,
                     defaults=dict(total_amount=0))
