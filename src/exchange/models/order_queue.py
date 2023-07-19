@@ -6,3 +6,7 @@ class OrderQueue(BaseModel):
     crypto_name = models.CharField(max_length=255)
     total_amount = models.PositiveIntegerField()
     orders = models.ManyToManyField('user.Order')
+    paid_at = models.DateTimeField(blank=True, null=True)
+
+    def __str__(self):
+        return self.crypto_name

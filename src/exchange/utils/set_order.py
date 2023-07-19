@@ -126,6 +126,7 @@ class OrderManager(CommandInterface):
         if crypto_order_queue.total_amount * self.crypto_price >= 10:
             if self.buy_from_exchange():
                 OrderRepository.update_order_process_status(crypto_order_queue.orders, status=True)
+                OrderQueueRepository.mark_order_queue_as_paid(crypto_order_queue.id)
                 return True
         else:
             return False

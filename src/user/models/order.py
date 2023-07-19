@@ -13,3 +13,6 @@ class Order(BaseModel):
     crypto_amount = models.PositiveIntegerField(validators=[validate_balance])
     processed = models.BooleanField(default=False)
     user = models.ForeignKey('user.User', on_delete=models.PROTECT)
+
+    def __str__(self):
+        return f"{self.crypto_name}-{self.crypto_amount}"

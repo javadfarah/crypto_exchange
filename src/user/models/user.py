@@ -8,6 +8,9 @@ class User(AbstractUser):
     class Meta:
         app_label = 'user'
 
+    def __str__(self):
+        return self.username
+
 
 @receiver(post_save, sender=User)
 def create_user_balance_on_create(sender, instance, created, **kwargs):

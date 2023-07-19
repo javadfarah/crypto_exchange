@@ -14,20 +14,20 @@ class MockedOrderManager(OrderManager):
 def test_set_order_view_not_enough_balance(test_user, authenticated_client):
     url = reverse('set-order')
     data = {
-        'crypto_name': 'Bitcoin',
+        'crypto_name': 'ABAN',
         'crypto_amount': 5,
         'user_id': test_user.id
     }
 
-    with pytest.raises(Exception) as e_info:
-        authenticated_client.post(url, data)
+    response = authenticated_client.post(url, data)
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
 
 
 @pytest.mark.django_db(transaction=True)
 def test_set_order_view_saved_order(test_user, authenticated_client, add_user_balance):
     url = reverse('set-order')
     data = {
-        'crypto_name': 'Bitcoin',
+        'crypto_name': 'ABAN',
         'crypto_amount': 1,
         'user_id': test_user.id
     }
@@ -41,7 +41,7 @@ def test_set_order_view_saved_order(test_user, authenticated_client, add_user_ba
 def test_set_order_view_queue(test_user, authenticated_client, add_user_balance):
     url = reverse('set-order')
     data = {
-        'crypto_name': 'Bitcoin',
+        'crypto_name': 'ABAN',
         'crypto_amount': 2,
         'user_id': test_user.id
     }
@@ -51,7 +51,7 @@ def test_set_order_view_queue(test_user, authenticated_client, add_user_balance)
     assert response.data == {"message": "Order saved"}
     url = reverse('set-order')
     data = {
-        'crypto_name': 'Bitcoin',
+        'crypto_name': 'ABAN',
         'crypto_amount': 1,
         'user_id': test_user.id
     }
@@ -65,7 +65,7 @@ def test_set_order_view_queue(test_user, authenticated_client, add_user_balance)
 def test_set_order_view_success(test_user, authenticated_client, add_user_balance):
     url = reverse('set-order')
     data = {
-        'crypto_name': 'Bitcoin',
+        'crypto_name': 'ABAN',
         'crypto_amount': 5,
         'user_id': test_user.id
     }
@@ -79,7 +79,7 @@ def test_set_order_view_success(test_user, authenticated_client, add_user_balanc
 def test_set_order_view_invalid_data(test_user, authenticated_client):
     url = reverse('set-order')
     data = {
-        'crypto_name': 'Bitcoin',
+        'crypto_name': 'ABAN',
         'crypto_amount': -5,
         'user_id': test_user.id
 
@@ -90,7 +90,7 @@ def test_set_order_view_invalid_data(test_user, authenticated_client):
 
 
 def test_buy_from_exchange():
-    order_manager = OrderManager(crypto_name="Bitcoin", crypto_amount=5, user_id=1)
+    order_manager = OrderManager(crypto_name="ABAN", crypto_amount=5, user_id=1)
     result = order_manager.buy_from_exchange()
     assert result is True
 
@@ -100,7 +100,7 @@ def test_buy_from_exchange():
 def test_buy_from_exchange_false(self, authenticated_client, test_user, add_user_balance):
     url = reverse('set-order')
     data = {
-        'crypto_name': 'Bitcoin',
+        'crypto_name': 'ABAN',
         'crypto_amount': 5,
         'user_id': test_user.id
 

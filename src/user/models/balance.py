@@ -24,3 +24,6 @@ def validate_balance(value: int) -> None:
 class Balance(BaseModel):
     balance = models.DecimalField(max_digits=10, decimal_places=2, validators=[validate_balance])
     user = models.ForeignKey("user.User", on_delete=models.PROTECT)
+
+    def __str__(self):
+        return f"{self.user}-{self.balance}"
